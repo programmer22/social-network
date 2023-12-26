@@ -16,7 +16,7 @@ const SocialAccounts = () => {
       </div>
 
       <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-3">What's new, John Doe?</h3>
+        <h3 className="text-lg font-semibold mb-3">What is new, John Doe?</h3>
         <textarea className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500" placeholder="Share your thoughts..."></textarea>
         <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none">Upload activity</button>
       </div>
