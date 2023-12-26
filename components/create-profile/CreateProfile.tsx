@@ -1,103 +1,65 @@
+// CreateProfile.tsx
+import React, { useState } from 'react';
 
+interface CreateProfileProps {
+  userEmail: string | undefined;
+}
 
+interface ProfileState {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
 
-import React, { useState, useEffect } from 'react';
-import { useUser } from "@clerk/nextjs";
-import { useRouter } from 'next/router';
-import axios from 'axios'
-
-const CreateProfile = () => {
-  const { user } = useUser();
-  const router = useRouter();
-  const [formData, setFormData] = useState({
+const CreateProfile: React.FC<CreateProfileProps> = ({ userEmail }) => {
+  const [profile, setProfile] = useState<ProfileState>({
+    email: userEmail || '',
     firstName: '',
     lastName: '',
-    email: user?.email || '', // Set email from Clerk's user info
-    dateOfBirth: '',
-    sex: ''
   });
 
-  useEffect(() => {
-    // Update the form data if the user's email changes
-    if (user?.email) {
-      setFormData(formData => ({ ...formData, email: user.email }));
-    }
-  }, [user]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-        const response = await axios.post('/api/createProfile', formData);
-    
-        console.log('Profile created:', response.data);
-        router.push('/'); // Redirect to homepage after profile creation
-      } catch (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.error('Profile creation failed:', error.response.data);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error('No response received:', error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error('Error:', error.message);
-        }
-      }
+    // Handle the form submission logic here
+    console.log('Profile data:', profile);
   };
 
   return (
-    <div className="flex justify-center py-24">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg">
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          placeholder="First Name"
-          required
-          className="my-2 p-2 border border-gray-300 rounded"
-        />
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          placeholder="Last Name"
-          required
-          className="my-2 p-2 border border-gray-300 rounded"
-        />
-        <input
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input 
           type="email"
           name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-          disabled // Email should be pre-filled and not editable
-          className="my-2 p-2 border border-gray-300 rounded bg-gray-100"
+          value={profile.email}
+          onChange={handleInputChange}
+          disabled // Email is not editable
         />
-        <input
-          type="date"
-          name="dateOfBirth"
-          value={formData.dateOfBirth}
-          onChange={handleChange}
-          required
-          className="my-2 p-2 border border-gray-300 rounded"
+      </div>
+      <div>
+        <label htmlFor="firstName">First Name:</label>
+        <input 
+          type="text"
+          name="firstName"
+          value={profile.firstName}
+          onChange={handleInputChange}
         />
-        <select name="sex" value={formData.sex} onChange={handleChange} required className="my-2 p-2 border border-gray-300 rounded">
-          <option value="">Select Sex</option>
-          <option value="m">Male</option>
-          <option value="f">Female</option>
-        </select>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 mt-2 rounded hover:bg-blue-600">Create Profile</button>
-      </form>
-    </div>
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name:</label>
+        <input 
+          type="text"
+          name="lastName"
+          value={profile.lastName}
+          onChange={handleInputChange}
+        />
+      </div>
+      <button type="submit">Save Profile</button>
+    </form>
   );
 };
 

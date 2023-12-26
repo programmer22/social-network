@@ -1,13 +1,15 @@
-// pages/_app.tsx
-import { ClerkProvider } from '@clerk/nextjs';
-import '../app/globals.css'; // Adjust the path to your global styles if necessary
+// CreateProfilePage.tsx
+import React from 'react';
+import { useUser, User } from "@clerk/nextjs";
+import CreateProfile from '../components/create-profile/CreateProfile';
 
-function MyApp({ Component, pageProps }) {
+export default function CreateProfilePage() {
+  const { user } = useUser() as { user: User | null };
+
   return (
-    <ClerkProvider >
-      <Component {...pageProps} />
-    </ClerkProvider>
+    <div className="container mx-auto px-4 py-8">
+      <CreateProfile userEmail={user?.email} />
+    </div>
   );
 }
 
-export default MyApp;
