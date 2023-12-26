@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image';
+
 import React, { useState, useEffect } from 'react';
 // Import necessary components and icons
 import { FaHeart, FaComment, FaShare } from 'react-icons/fa';
@@ -40,7 +42,7 @@ export default function NewsFeed() {
                         </div>
                         <p>{post.content}</p>
                         {/* Post image if available */}
-                        {post.image && <img src={post.image} alt="Post" className="my-3 rounded" />}
+                        {post.image && <Image src={post.image} alt="Post" className="my-3 rounded" />}
                         <div className="flex">
                             <button className="flex items-center mr-4 text-gray-600 hover:text-red-500">
                                 <FaHeart className="mr-1" /> Like

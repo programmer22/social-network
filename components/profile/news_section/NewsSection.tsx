@@ -5,7 +5,7 @@ const NewsSection = () => {
     <div className="w-full md:w-1/3 pl-4 space-y-6">
       <div className="mb-6 p-4 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg shadow-lg text-white">
         <h3 className="text-xl font-bold mb-3">Post Your Event</h3>
-        <p>Have an event you'd like to share? Post it on Goeventi for free! Create an account, fill out a simple form, and you're all set.</p>
+        <p>Have an event you would like to share? Post it on Goeventi for free! Create an account, fill out a simple form, and you're all set.</p>
         <button className="mt-4 bg-white text-red-500 px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500">Post It Now</button>
       </div>
 
