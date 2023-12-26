@@ -16,7 +16,7 @@ const CreateProfile = () => {
   };
   
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     // Perform client-side validation if necessary
