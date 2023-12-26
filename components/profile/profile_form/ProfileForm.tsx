@@ -11,9 +11,10 @@ const CreateProfile = () => {
     sex: ''
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
