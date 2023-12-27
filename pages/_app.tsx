@@ -1,16 +1,23 @@
-// CreateProfilePage.tsx
-import React from 'react';
-import { useUser } from '@clerk/nextjs';
-import CreateProfile from '../components/create-profile/CreateProfile';
+// pages/_app.tsx
+import { AppProps } from 'next/app';
+import { ClerkProvider, ClerkProviderProps } from '@clerk/nextjs';
+import '../app/globals.css';
+import Header from '../components/header/Header';
+import Footer from '../components/footer/Footer';
 
-export default function CreateProfilePage() {
-  // Assuming 'user' is of a type where 'email' might not be a recognized property,
-  // you can use a type assertion (if you are sure the property exists):
-  const { user } = useUser() as { user: { email?: string } | null };
+function MyApp({ Component, pageProps }: AppProps) {
+  // ClerkProviderProps should be defined according to your Clerk configuration
+  const clerkProps: ClerkProviderProps = {
+    frontendApi: process.env.NEXT_PUBLIC_CLERK_FRONTEND_API,
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <CreateProfile userEmail={user?.email} />
-    </div>
+    <ClerkProvider {...clerkProps}>
+      <Header />
+      <Component {...pageProps} />
+      <Footer />
+    </ClerkProvider>
   );
 }
+
+export default MyApp;
