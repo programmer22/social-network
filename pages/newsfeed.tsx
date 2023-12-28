@@ -1,48 +1,47 @@
-'use client'
-
 import Image from 'next/image';
-
 import React, { useState, useEffect } from 'react';
-// Import necessary components and icons
 import { FaHeart, FaComment, FaShare } from 'react-icons/fa';
 
+// Define a TypeScript interface for a post
+interface Post {
+    id: number; // Unique identifier for a post
+    userName: string;
+    timeAgo: string;
+    content: string;
+    imageUrl?: string; // Optional image URL
+}
+
 export default function NewsFeed() {
-    // Sample state to hold posts (replace with real data fetching mechanism)
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<Post[]>([]); // Use the Post interface for state
 
     useEffect(() => {
         // Fetch posts from your data source/API and set them in state
-        // setPosts(fetchPosts());
+        // Example API call (replace with your actual data fetching logic)
+        // fetch('your_api_endpoint')
+        //     .then(response => response.json())
+        //     .then(data => setPosts(data))
+        //     .catch(error => console.error('Error fetching posts:', error));
     }, []);
-
-
-    // Example post data
-    const examplePost = {
-        userName: 'Alex Smith',
-        timeAgo: '2h ago',
-        content: 'Had an amazing time exploring the mountains! #HikingAdventure',
-        imageUrl: 'path_to_image.jpg' // Replace with the actual image path
-    };
-
 
     return (
         <div className="container mx-auto px-4 py-8">
             <h2 className="text-2xl font-semibold mb-4">Newsfeed</h2>
             {posts.length ? (
-                posts.map((post, index) => (
-                    <div key={index} className="mb-6 p-4 bg-white shadow rounded-lg">
+                posts.map((post) => (
+                    <div key={post.id} className="mb-6 p-4 bg-white shadow rounded-lg">
                         <div className="flex items-center mb-3">
                             {/* Replace with user avatar */}
                             <div className="mr-3 rounded-full bg-gray-200 w-10 h-10"></div>
-                            {/* Replace with user name and post date */}
                             <div>
-                                <p className="font-semibold">User Name</p>
-                                <p className="text-sm text-gray-500">Posted on Date</p>
+                                <p className="font-semibold">{post.userName}</p>
+                                <p className="text-sm text-gray-500">{post.timeAgo}</p>
                             </div>
                         </div>
                         <p>{post.content}</p>
                         {/* Post image if available */}
-                        {post.image && <Image src={post.image} alt="Post" className="my-3 rounded" />}
+                        {post.imageUrl && (
+                            <Image src={post.imageUrl} alt="Post" className="my-3 rounded" width={500} height={300} />
+                        )}
                         <div className="flex">
                             <button className="flex items-center mr-4 text-gray-600 hover:text-red-500">
                                 <FaHeart className="mr-1" /> Like
